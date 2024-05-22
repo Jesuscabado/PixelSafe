@@ -19,9 +19,13 @@ const userSchema  = new mongoose.Schema({
         type:String,
         enum : ["user","admin"],
         default: "user"
+    },
+    gamesList: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "userGame"
     }
-})
+});
 
-const userModel = mongoose.model("user",userSchema);
+const userModel = mongoose.model("user", userSchema);
 
 export default userModel;

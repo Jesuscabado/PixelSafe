@@ -1,0 +1,24 @@
+[
+    {
+        "email": "usuario1@example.com",
+        "username": "usuario1",
+        "password": "contraseña1",
+        "role": "user",
+        "gamesList": "6127ff96e60e002078ced2aa"
+    },
+    {
+        "email": "usuario2@example.com",
+        "username": "usuario2",
+        "password": "contraseña2",
+        "role": "user",
+        "gamesList": "6127ff96e60e002078ced2bb"
+    },
+    {
+        "email": "usuario3@example.com",
+        "username": "usuario3",
+        "password": "contraseña3",
+        "role": "user",
+        "gamesList": "6127ff96e60e002078ced2cc"
+    }
+]
+

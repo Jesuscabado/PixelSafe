@@ -1,0 +1,53 @@
+[
+    {
+        "title": "The Legend of Zelda: Breath of the Wild",
+        "genre": "Acción-Aventura",
+        "platforms": ["Nintendo Switch", "Wii U"]
+    },
+    {
+        "title": "The Witcher 3: Wild Hunt",
+        "genre": "RPG de mundo abierto",
+        "platforms": ["PC", "PlayStation 4", "Xbox One", "Nintendo Switch"]
+    },
+    {
+        "title": "Red Dead Redemption 2",
+        "genre": "Acción-Aventura",
+        "platforms": ["PlayStation 4", "Xbox One", "PC", "Stadia"]
+    },
+    {
+        "title": "Super Mario Odyssey",
+        "genre": "Plataformas",
+        "platforms": ["Nintendo Switch"]
+    },
+    {
+        "title": "Persona 5",
+        "genre": "RPG, Simulador de vida",
+        "platforms": ["PlayStation 3", "PlayStation 4"]
+    },
+    {
+        "title": "Fortnite",
+        "genre": "Battle Royale, Shooter",
+        "platforms": ["PC", "PlayStation 4", "Xbox One", "Nintendo Switch", "iOS", "Android"]
+    },
+    {
+        "title": "Among Us",
+        "genre": "Multijugador en línea, Social Deduction",
+        "platforms": ["PC", "iOS", "Android"]
+    },
+    {
+        "title": "Minecraft",
+        "genre": "Sandbox, Construcción",
+        "platforms": ["PC", "PlayStation 4", "Xbox One", "Nintendo Switch", "iOS", "Android"]
+    },
+    {
+        "title": "Hades",
+        "genre": "Roguelike, Acción",
+        "platforms": ["PC", "Nintendo Switch"]
+    },
+    {
+        "title": "Animal Crossing: New Horizons",
+        "genre": "Simulador de vida",
+        "platforms": ["Nintendo Switch"]
+    }
+]
+
