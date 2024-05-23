@@ -1,8 +1,8 @@
-import gameModel from "../../models/gameModel.js";
+import gameController from "../../controllers/games/gameController.js";
 
 const getAll = async (req, res) => {
     try {
-        const games = await gameModel.find();
+        const games = await gameController.getAll();
         res.json({ data: games });
     } catch (error) {
         console.error(error);
@@ -13,7 +13,7 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
     try {
         const id = req.params.id;
-        const game = await gameModel.findById(id);
+        const game = await gameController.getById(id);
         if (game) {
             res.json({ data: game });
         } else {
@@ -27,8 +27,12 @@ const getById = async (req, res) => {
 
 const create = async (req, res) => {
     try {
-        const game = await gameModel.create(req.body);
-        res.status(201).json({ data: game });
+        const game = await gameController.create(req.body);
+        if (game) {
+            res.status(201).json({ data: game });
+        } else {
+            res.status(400).json({ message: "Error creating game" });
+        }
     } catch (error) {
         console.error(error);
         res.status(400).json({ message: "Error creating game" });
@@ -39,7 +43,7 @@ const update = async (req, res) => {
     try {
         const id = req.params.id;
         const data = req.body;
-        const game = await gameModel.findByIdAndUpdate(id, data, { new: true });
+        const game = await gameController.update(id, data);
         if (game) {
             res.json({ data: game });
         } else {
@@ -54,7 +58,7 @@ const update = async (req, res) => {
 const remove = async (req, res) => {
     try {
         const id = req.params.id;
-        const game = await gameModel.findByIdAndDelete(id);
+        const game = await gameController.remove(id);
         if (game) {
             res.json({ data: game });
         } else {

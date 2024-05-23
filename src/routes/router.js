@@ -6,7 +6,7 @@ import userGameRouter from "./userGameRouter.js";
 const router = Router();
 
 router.get("/", (req, res) => {
-    res.json({ data: "hello api" });
+    res.json({ data: {message:"You are not prepAPIared!", imageUrl: "https://wow.zamimg.com/uploads/screenshots/normal/552557-illidan-tempestira-updated-model.jpg"}});
 });
 
 router.use("/users", userRouter);

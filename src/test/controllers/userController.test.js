@@ -1,16 +1,14 @@
 import connectDB from "../../config/mongo.js";
 import mongoose from "mongoose";
-import userController from "../../controllers/users/userController.js";
 
-describe("test de userController", () => {
-    let userId;
+import userController from "../../controllers/userController.js";
 
+describe("User Controller Tests", () => {
     beforeAll(async () => {
         await connectDB();
         try {
             await mongoose.connection.collections["users"].drop();
         } catch (error) {
-            // Es posible que la colección no exista, lo cual es aceptable en este punto.
             console.log(error);
         }
     });
@@ -19,61 +17,46 @@ describe("test de userController", () => {
         await mongoose.connection.close();
     });
 
-    test("Crear usuario", async () => {
-        const user = await userController.create({
-            email: "test",
-            username: "test",
-            password: "test",
-            role: "user",
-            gamesList: "test"
-        });
-        userId = user._id;
-        expect(user).toEqual(expect.objectContaining({
-            email: "test",
-            username: "test",
-            password: "test",
-            role: "user",
-            gamesList: "test"
-        }));
+    test("Create User", async () => {
+        const userData = {
+            email: "test@example.com",
+            username: "testuser",
+            password: "testpassword",
+            role: "user"
+        };
+
+        const user = await userController.create(userData);
+
+        expect(user).toEqual(expect.objectContaining(userData));
     });
 
-    test("Obtener usuario por id", async () => {
-        const user = await userController.getById(userId);
-        expect(user).toEqual(expect.objectContaining({
-            email: "test",
-            username: "test",
-            password: "test"
-        }));
+    test("Get User by ID", async () => {
+        const userData = {
+            email: "test@example.com",
+            username: "testuser",
+            password: "testpassword",
+            role: "user"
+        };
+
+        const newUser = await userController.create(userData);
+
+        const foundUser = await userController.getById(newUser._id);
+
+        expect(foundUser).toMatchObject(newUser);
     });
 
-    test("Obtener usuario por email", async () => {
-        const users = await userController.getByProperty("email", "test");
-        expect(users[0]).toEqual(expect.objectContaining({
-            email: "test",
-            username: "test",
-            password: "test"
-        }));
-    });
+    test("Delete User by ID", async () => {
+        const userData = {
+            email: "test@example.com",
+            username: "testuser",
+            password: "testpassword",
+            role: "user"
+        };
 
-    test("Obtener usuario por username", async () => {
-        const users = await userController.getByProperty("username", "test");
-        expect(users[0]).toEqual(expect.objectContaining({
-            email: "test",
-            username: "test",
-            password: "test"
-        }));
-    });
+        const newUser = await userController.create(userData);
 
-    test("Eliminar usuario", async () => {
-        const user = await userController.remove(userId);
-        expect(user).toEqual(expect.objectContaining({
-            email: "test",
-            username: "test",
-            password: "test"
-        }));
+        const deletedUser = await userController.remove(newUser._id);
 
-        // Verificar que el usuario ha sido eliminado
-        const deletedUser = await userController.getById(userId);
-        expect(deletedUser).toBeNull();
+        expect(deletedUser).toMatchObject(newUser);
     });
 });

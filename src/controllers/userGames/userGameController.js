@@ -2,7 +2,7 @@ import userGameModel from "../../models/userGameModel.js";
 
 const getAll = async () => {
     try {
-        const userGames = await userGameModel.find().populate('user').populate('game');
+        const userGames = await userGameModel.find().populate('userId').populate('ownedGames.gameId').populate('pendingGames.gameId');
         return userGames;
     } catch (error) {
         console.error(error);
@@ -12,7 +12,7 @@ const getAll = async () => {
 
 const getById = async (id) => {
     try {
-        const userGame = await userGameModel.findById(id).populate('user').populate('game');
+        const userGame = await userGameModel.findById(id).populate('userId').populate('ownedGames.gameId').populate('pendingGames.gameId');
         return userGame;
     } catch (error) {
         console.error(error);
@@ -32,7 +32,7 @@ const create = async (data) => {
 
 const update = async (id, data) => {
     try {
-        const userGame = await userGameModel.findByIdAndUpdate(id, data, { new: true }).populate('user').populate('game');
+        const userGame = await userGameModel.findByIdAndUpdate(id, data, { new: true }).populate('userId').populate('ownedGames.gameId').populate('pendingGames.gameId');
         return userGame;
     } catch (error) {
         console.error(error);
@@ -42,7 +42,7 @@ const update = async (id, data) => {
 
 const remove = async (id) => {
     try {
-        const userGame = await userGameModel.findByIdAndDelete(id).populate('user').populate('game');
+        const userGame = await userGameModel.findByIdAndDelete(id).populate('userId').populate('ownedGames.gameId').populate('pendingGames.gameId');
         return userGame;
     } catch (error) {
         console.error(error);
