@@ -1,15 +1,19 @@
 import connectDB from "../../config/mongo.js";
 import mongoose from "mongoose";
-
 import gameController from "../../controllers/games/gameController.js";
 
-
 describe("test de gameController", () => {
+    const gameData = {
+        title: "test",
+        genre: "test-genre",
+        platforms: ["test-platform"]
+    };
+
     beforeAll(async () => {
         await connectDB();
-        try{
+        try {
             await mongoose.connection.collections["games"].drop();
-        }catch(error){
+        } catch (error) {
             console.log(error);
         }
     });
@@ -18,38 +22,20 @@ describe("test de gameController", () => {
         await mongoose.connection.close();
     });
 
-    test ("Crear juego", async () => {
-        const game = await gameController.create({
-            name: "test",
-            platforms: ["test"]
-        });
-        expect(game).toEqual(expect.objectContaining({
-            name: "test",
-            platforms: ["test"]
-        }));
+    test("Crear juego", async () => {
+        const game = await gameController.create(gameData);
+        expect(game).toEqual(expect.objectContaining(gameData));
     });
 
-    test ("Obtener juego por id", async () => {
-        const game = await gameController.create({
-            name: "test",
-            platforms: ["test"]
-        });
-        const gameById = await gameController.getById(game._id);
-        expect(gameById).toEqual(expect.objectContaining({
-            name: "test",
-            platforms: ["test"]
-        }));
+    test("Obtener juego por id", async () => {
+        const createdGame = await gameController.create(gameData);
+        const gameById = await gameController.getById(createdGame._id);
+        expect(gameById).toEqual(expect.objectContaining(gameData));
     });
 
-    test ("Eliminar juego por id", async () => {
-        const game = await gameController.create({
-            name: "test",
-            platforms: ["test"]
-        });
-        const gameById = await gameController.remove(game._id);
-        expect(gameById).toEqual(expect.objectContaining({
-            name: "test",
-            platforms: ["test"]
-        }));
+    test("Eliminar juego por id", async () => {
+        const createdGame = await gameController.create(gameData);
+        const removedGame = await gameController.remove(createdGame._id);
+        expect(removedGame).toEqual(expect.objectContaining(gameData));
     });
-})
+});

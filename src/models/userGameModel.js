@@ -30,6 +30,10 @@ const userGameSchema = new mongoose.Schema({
                 ref: "game",
                 required: true
             },
+            title: {
+                type: String,
+                required: true
+            },
             platform: {
                 type: String,
                 required: true

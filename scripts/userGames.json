@@ -21,21 +21,25 @@
         "pendingGames": [
             {
                 "gameId": "6127ff96e60e002078ced2ee",
+                "title": "Pending Game 1",
                 "platform": "Switch",
                 "dateAdded": "2024-05-26T12:15:00Z"
             },
             {
                 "gameId": "6127ff96e60e002078ced2ff",
+                "title": "Pending Game 2",
                 "platform": "PS5",
                 "dateAdded": "2024-05-27T16:20:00Z"
             },
             {
                 "gameId": "6127ff96e60e002078ced211",
+                "title": "Pending Game 3",
                 "platform": "Xbox Series X",
                 "dateAdded": "2024-05-28T09:30:00Z"
             },
             {
                 "gameId": "6127ff96e60e002078ced222",
+                "title": "Pending Game 4",
                 "platform": "PC",
                 "dateAdded": "2024-05-29T11:00:00Z"
             }
@@ -58,6 +62,7 @@
         "pendingGames": [
             {
                 "gameId": "6127ff96e60e002078ced2ee",
+                "title": "Pending Game 5",
                 "platform": "Switch",
                 "dateAdded": "2024-05-26T12:15:00Z"
             }

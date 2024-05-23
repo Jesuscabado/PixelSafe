@@ -1,13 +1,16 @@
 import mongoose from "mongoose";
 
 const gameSchema = new mongoose.Schema({
-    name: {
+    title: {
+        type: String,
+        required: true
+    },
+    genre: {
         type: String,
         required: true
     },
     platforms: {
         type: [String],
-        required: true
     }
 });
 
