@@ -32,6 +32,58 @@ const getByProperty = async (property, value) => {
     }
 }
 
+const login = async (data) => {
+    const {email, username, password} = data;
+    if((!email && !username) || !password){
+        return {error: "Email or username and password are required"};
+    }
+    try {
+        let user;
+        if(email){
+            const users = await getByProperty("email", email);
+            user = users[0];
+        }
+        else{
+            const users = await getByProperty("username", username);
+            user = users[0];
+        }
+        console.log("usuario", user);
+        if(!user){
+            return {error: "User not found", status: 404};
+        }
+        console.log("contraseña", password,user.password);
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if(!isPasswordValid){
+            return {error: "Combinacion de email y contraseña incorrecta", status: 401};
+        }
+        console.log("login correcto",user);
+        const token = jwt.sign({_id:user._id,username:user.username,role:user.role},process.env.JWT_SECRET,{expiresIn: 60 * 60})
+        return {token};
+
+    } catch (error) {
+        console.error(error);
+        return {error:"Ha habido un error",status:500};
+    }
+}
+
+const register = async(data) => {
+    const {email,username,password,passwordRepeat} = data;
+    if(!email || !username || !password || !passwordRepeat){
+        return {error:"Falta alguno de los campos"};
+    }
+    if(password !== passwordRepeat){
+        return {error:"Las contraseñas no coinciden"};
+    }
+    const userData = {
+        email,
+        username,
+        password,
+        role:"user"
+    }
+    const user = await create(userData);
+    return user;
+}
+
 const create = async (data) => {
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -86,6 +138,8 @@ export const functions = {
     getById,
     getByProperty,
     create,
+    login,
+    register,
     update,
     remove
 }

@@ -8,7 +8,7 @@ const getAll = async () => {
         console.error(error);
         return [];
     }
-}
+};
 
 const getById = async (id) => {
     try {
@@ -18,17 +18,20 @@ const getById = async (id) => {
         console.error(error);
         return null;
     }
-}
+};
 
 const create = async (data) => {
     try {
-        const game = await gameModel.create(data);
+        let game = await gameModel.findOne({ title: data.title });
+        if (!game) {
+            game = await gameModel.create(data);
+        }
         return game;
     } catch (error) {
         console.error(error);
         return null;
     }
-}
+};
 
 const update = async (id, data) => {
     try {
@@ -38,7 +41,7 @@ const update = async (id, data) => {
         console.error(error);
         return null;
     }
-}
+};
 
 const remove = async (id) => {
     try {
@@ -48,7 +51,7 @@ const remove = async (id) => {
         console.error(error);
         return null;
     }
-}
+};
 
 export const functions = {
     getAll,
@@ -56,6 +59,6 @@ export const functions = {
     create,
     update,
     remove
-}
+};
 
 export default functions;

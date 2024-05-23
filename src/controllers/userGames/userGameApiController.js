@@ -3,7 +3,7 @@ import userGameController from "../../controllers/userGames/userGameController.j
 const getAll = async (req, res) => {
     try {
         const userGames = await userGameController.getAll();
-        res.json({ 
+        res.json({
             message: "Here are the user-game relationships",
             data: userGames,
             imageUrl: "https://example.com/your-image.jpg" // Añade la URL de la imagen aquí
@@ -12,7 +12,7 @@ const getAll = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
 const getById = async (req, res) => {
     try {
@@ -27,7 +27,7 @@ const getById = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
 const create = async (req, res) => {
     try {
@@ -41,7 +41,7 @@ const create = async (req, res) => {
         console.error(error);
         res.status(400).json({ message: "Error creating user-game relationship" });
     }
-}
+};
 
 const update = async (req, res) => {
     try {
@@ -56,12 +56,12 @@ const update = async (req, res) => {
         console.error(error);
         res.status(400).json({ message: "Error updating user-game relationship" });
     }
-}
+};
 
 const remove = async (req, res) => {
     try {
-        const id = req.params.id;
-        const userGame = await userGameController.remove(id);
+        const { id, gameId, listType } = req.params;
+        const userGame = await userGameController.remove(id, gameId, listType);
         if (userGame) {
             res.json({ data: userGame });
         } else {
@@ -71,7 +71,7 @@ const remove = async (req, res) => {
         console.error(error);
         res.status(400).json({ message: "Error deleting user-game relationship" });
     }
-}
+};
 
 export default {
     getAll,
@@ -79,4 +79,4 @@ export default {
     create,
     update,
     remove
-}
+};

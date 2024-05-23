@@ -8,7 +8,7 @@ const getAll = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
 const getById = async (req, res) => {
     try {
@@ -23,7 +23,7 @@ const getById = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
 const create = async (req, res) => {
     try {
@@ -37,7 +37,7 @@ const create = async (req, res) => {
         console.error(error);
         res.status(400).json({ message: "Error creating game" });
     }
-}
+};
 
 const update = async (req, res) => {
     try {
@@ -53,7 +53,7 @@ const update = async (req, res) => {
         console.error(error);
         res.status(400).json({ message: "Error updating game" });
     }
-}
+};
 
 const remove = async (req, res) => {
     try {
@@ -68,7 +68,7 @@ const remove = async (req, res) => {
         console.error(error);
         res.status(400).json({ message: "Error deleting game" });
     }
-}
+};
 
 export default {
     getAll,
@@ -76,4 +76,4 @@ export default {
     create,
     update,
     remove
-}
+};
