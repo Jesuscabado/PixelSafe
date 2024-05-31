@@ -1,0 +1,11 @@
+DB_HOST=PixelSafe
+DB_NAME=PixelSafeDB 
+DB_USER=user 
+DB_PASSWORD=1234
+DB_PORT=27020
+
+APP_PORT=3010
+APP_HOST=PixelSafe_app
+
+JWT_SECRET=secretoDanel
+SESSION_SECRET=sesion
