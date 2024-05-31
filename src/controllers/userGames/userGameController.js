@@ -1,5 +1,6 @@
 import userGameModel from "../../models/userGameModel.js";
 import gameModel from "../../models/gameModel.js";
+import mongoose from "mongoose";
 
 const getAll = async () => {
     try {
@@ -29,18 +30,31 @@ const getById = async (id) => {
 
 const create = async (data) => {
     try {
-        // Check if the game exists in the main database, add if not
         for (let game of data.ownedGames) {
+            if (!mongoose.Types.ObjectId.isValid(game.gameId)) {
+                throw new Error(`Invalid gameId: ${game.gameId}`);
+            }
             let existingGame = await gameModel.findById(game.gameId);
             if (!existingGame) {
-                await gameModel.create(game);
+                await gameModel.create({
+                    _id: game.gameId,
+                    title: game.title,
+                    platform: game.platform
+                });
             }
         }
 
         for (let game of data.pendingGames) {
+            if (!mongoose.Types.ObjectId.isValid(game.gameId)) {
+                throw new Error(`Invalid gameId: ${game.gameId}`);
+            }
             let existingGame = await gameModel.findById(game.gameId);
             if (!existingGame) {
-                await gameModel.create(game);
+                await gameModel.create({
+                    _id: game.gameId,
+                    title: game.title,
+                    platform: game.platform
+                });
             }
         }
 
