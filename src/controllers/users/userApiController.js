@@ -1,7 +1,8 @@
 import userController from "./userController.js";
 
 const getAll = async (req, res) => {
-    const users = await userController.getAll();
+    const query = req.query.query;
+    const users = await userController.getAll(query);
     res.json({ data: users });
 }
 
@@ -11,10 +12,36 @@ const getById = async (req, res) => {
     res.json({ data: user });
 }
 
+const getByToken = async (req, res) => {
+    const id = req.user._id;
+    const user = await userController.getById(id);
+    res.json({ data: user });
+}
+
 const getByProperty = async (req, res) => {
     const { property, value } = req.query;
     const users = await userController.getByProperty(property, value);
     res.json({ data: users });
+}
+
+const register = async (req, res) => {
+    const user = await userController.register(req.body);
+    if (!user) {
+        return res.json({ error: "No se ha podido registrar el usuario" });
+    }
+
+    if (user.error) {
+        return res.json({ error: user.error });
+    }
+    res.json({ data: user });
+}
+
+const login = async (req, res) => {
+    const data = await userController.login(req.body);
+    if (data.error) {
+        return res.status(data.status).json({ error: data.error });
+    }
+    res.json(data);
 }
 
 const create = async (req, res) => {
@@ -37,7 +64,10 @@ const remove = async (req, res) => {
 export default {
     getAll,
     getById,
+    getByToken,
     getByProperty,
+    login,
+    register,
     create,
     update,
     remove
