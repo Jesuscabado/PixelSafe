@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
-const userRows = { _id: 1, username: 1, email: 1, role: 1, projects: 1 };
+const userRows = { _id: 1, username: 1, email: 1, role: 1, gamesList: 1 };
 
 // Función para obtener todos los usuarios con la lista de juegos
 const getAll = async (query = null) => {
@@ -41,9 +41,11 @@ const getByProperty = async (property, value, isAdmin = false) => {
         const filter = { [property]: value };
         if (!isAdmin) {
             filter.role = "user";  // Por ejemplo, puedes filtrar solo usuarios normales si no es administrador
+            const users = await userModel.find(filter, userRows).populate('gamesList');
+            return users;
         }
-        const users = await userModel.find(filter, userRows).populate('gamesList');
-        return users;
+        const users = await userModel.find(filter).populate('gamesList');
+            return users;
     } catch (error) {
         console.error(error);
         return null;
@@ -68,11 +70,12 @@ const login = async (data) => {
         if (!user) {
             return { error: "User not found", status: 404 };
         }
+        console.log(password, user.password);
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             return { error: "Invalid email or password", status: 401 };
         }
-        const token = jwt.sign({ _id: user._id, username: user.username, role: user.role }, process.env.JWT_SECRET, { expiresIn: 60 * 60 });
+        const token = jwt.sign({ _id: user._id, username: user.username, role: user.role }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24});
         return { token };
     } catch (error) {
         console.error(error);
