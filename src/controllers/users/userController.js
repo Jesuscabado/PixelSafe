@@ -101,31 +101,15 @@ const register = async (data) => {
 
 // Función para crear un nuevo usuario y su lista de juegos
 const create = async (data) => {
-    const session = await mongoose.startSession();
-    session.startTransaction();
-
-    try {
-        const hash = await bcrypt.hash(data.password, 10);
-        data.password = hash;
-        const user = new userModel(data);
-        const savedUser = await user.save({ session });
-
-        const userGames = new userGameModel({ userId: savedUser._id });
-        const savedUserGames = await userGames.save({ session });
-
-        savedUser.gamesList = savedUserGames._id;
-        await savedUser.save({ session });
-
-        await session.commitTransaction();
-        session.endSession();
-
-        return savedUser;
-    } catch (error) {
-        await session.abortTransaction();
-        session.endSession();
-        console.error(error);
-        return null;
-    }
+   try {
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+    data.password = hashedPassword;
+    const user = await userModel.create(data);
+    return user;
+   } catch (error) {
+    console.error(error);
+    return null;
+   }
 };
 
 // Función para actualizar un usuario
